@@ -13,12 +13,12 @@ const git_commit = ({author, email, commit_message, files_list}) => {
   try {
     if (files_list) {
       return child_process.execSync(
-        `git commit -c "user.name ${author}" -c "user.email ${email}" commit ${files_list.join(' ')}`,
+        `git commit -c "user.name ${author}" -c "user.email ${email}" commit -m "${commit_message}" ${files_list.join(' ')}`,
         {encoding: 'utf8'}
       );
     } else {
       return child_process.execSync(
-        `git commit -c "user.name ${author}" -c "user.email ${email}" commit`,
+        `git commit -c "user.name ${author}" -c "user.email ${email}" commit -m "${commit_message}"`,
         {encoding: 'utf8'}
       );
     }
