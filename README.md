@@ -165,6 +165,27 @@ The commit author default user name of `gha-utilities` and email of `actions@git
 ```
 
 
+------
+
+
+Multi-line commit messages are possible from Workflow file(s), and _should_ also allow for environment variables...
+
+
+```YAML
+      - name: Workspace Commit
+        uses: gha-utilities/workspace-commit@v0.0.1
+        env:
+          COMMIT_MESSAGE_FOOTER: This commit was applied automatically from an Action
+        with:
+          all: true
+          message: >
+            Updates compiled site files
+
+            ${COMMIT_MESSAGE_FOOTER}
+
+
+```
+
 ___
 
 
