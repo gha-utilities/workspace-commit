@@ -95,7 +95,7 @@ jobs:
         run: git add -A .
 
       - name: Commit changes
-        with: gha-utilities/workspace-commit@master
+        with: gha-utilities/workspace-commit@v0.0.2
           message: Updates compiled site files
           all: true
 
@@ -138,7 +138,7 @@ The commit author default user name of `gha-utilities` and email of `actions@git
 
 ```YAML
       - name: Workspace Commit
-        uses: gha-utilities/workspace-commit@v0.0.1
+        uses: gha-utilities/workspace-commit@v0.0.2
         with:
           paths: |
             README.md
@@ -173,7 +173,7 @@ Multi-line commit messages are possible from Workflow file(s), and _should_ also
 
 ```YAML
       - name: Workspace Commit
-        uses: gha-utilities/workspace-commit@v0.0.1
+        uses: gha-utilities/workspace-commit@v0.0.2
         env:
           COMMIT_MESSAGE_FOOTER: This commit was applied automatically from an Action
         with:
