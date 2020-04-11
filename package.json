@@ -1,6 +1,6 @@
 {
   "name": "workspace-commit",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "'JavaScript wrapper for GitHub Actions, runs `child_process.execSync(\"git commit ...\")` with provided Inputs'",
   "main": "index.js",
   "scripts": {

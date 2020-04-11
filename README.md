@@ -75,7 +75,7 @@ jobs:
         run: mkdir -vp ~/www/repository-name
 
       - name: Jekyll Build
-        uses: gha-utilities/jekyll-build@v0.0.1
+        uses: gha-utilities/jekyll-build@v0.0.3
         with:
           jekyll_github_token: ${{ secrets.JEKYLL_GITHUB_TOKEN }}
           source: ./
@@ -95,7 +95,7 @@ jobs:
         run: git add -A .
 
       - name: Commit changes
-        with: gha-utilities/workspace-commit@v0.0.2
+        with: gha-utilities/workspace-commit@v0.0.3
           message: Updates compiled site files
           all: true
 
@@ -106,7 +106,7 @@ jobs:
           branch: pr-pages
 
       - name: Initialize Pull Request
-        uses: gha-utilities/init-pull-request@v0.0.2
+        uses: gha-utilities/init-pull-request@v0.0.9
         with:
           pull_request_token: ${{ secrets.GITHUB_TOKEN }}
           head: pr-pages
@@ -138,7 +138,7 @@ The commit author default user name of `gha-utilities` and email of `actions@git
 
 ```YAML
       - name: Workspace Commit
-        uses: gha-utilities/workspace-commit@v0.0.2
+        uses: gha-utilities/workspace-commit@v0.0.3
         with:
           paths: |
             README.md
@@ -173,7 +173,7 @@ Multi-line commit messages are possible from Workflow file(s), and _should_ also
 
 ```YAML
       - name: Workspace Commit
-        uses: gha-utilities/workspace-commit@v0.0.2
+        uses: gha-utilities/workspace-commit@v0.0.3
         env:
           COMMIT_MESSAGE_FOOTER: This commit was applied automatically from an Action
         with:

@@ -28,9 +28,9 @@ const git_commit = ({author, email, commit_message, files_list}) => {
     const error_message = [
       'Error attempting to commit...',
       `Status code -> ${e.status}`,
-      `Error message -> ${e.message}`
-      `Standard error -> ${e.stderr}`
-      `Standard out -> ${e.stdout}`
+      `Error message -> ${e.message}`,
+      `Standard error -> ${e.stderr}`,
+      `Standard out -> ${e.stdout}`,
       ''
     ];
 
