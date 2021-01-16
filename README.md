@@ -10,7 +10,7 @@ JavaScript wrapper runs `child_process.execSync("git commit ...")` on GitHub Act
 ## [![Byte size of workspace-commit][badge__master__workspace_commit__source_code]][workspace_commit__master__source_code] [![Open Issues][badge__issues__workspace_commit]][issues__workspace_commit] [![Open Pull Requests][badge__pulls__workspace_commit]][pulls__workspace_commit] [![Latest commits][badge__commits__workspace_commit__master]][commits__workspace_commit__master]
 
 
-------
+---
 
 
 #### Table of Contents
@@ -29,7 +29,7 @@ JavaScript wrapper runs `child_process.execSync("git commit ...")` on GitHub Act
 - [:balance_scale: License][heading__license]
 
 
-------
+---
 
 
 
@@ -42,7 +42,7 @@ JavaScript wrapper runs `child_process.execSync("git commit ...")` on GitHub Act
 Access to GitHub Actions if using on GitHub, or manually assigning environment variables prior to running `npm test`.
 
 
-___
+______
 
 
 ## Quick Start
@@ -95,7 +95,9 @@ jobs:
         run: git add -A .
 
       - name: Commit changes
-        with: gha-utilities/workspace-commit@v0.0.3
+        with: gha-utilities/workspace-commit@v0.0.4
+          author: ${{ github.author }}
+          email: name@example.com
           message: Updates compiled site files
           all: true
 
@@ -118,7 +120,7 @@ jobs:
 ```
 
 
-___
+______
 
 
 ## Notes
@@ -130,15 +132,15 @@ ___
 This Action is intended for committing _local_ Workspace repository changes, and does **not** assume that an immediate push is wanted; Pull Requests are certainly welcomed if bugs are found, or more commit related Inputs translation are desired.
 
 
-------
+---
 
 
-The commit author default user name of `gha-utilities` and email of `actions@github.com`, may be modified within your Workflows as well as selecting a subset of staged paths to commit...
+The commit author defaults to user name of `gha-utilities` and email of `actions@github.com`, may be modified within your Workflows as well as selecting a subset of staged paths to commit...
 
 
 ```YAML
       - name: Workspace Commit
-        uses: gha-utilities/workspace-commit@v0.0.3
+        uses: gha-utilities/workspace-commit@v0.0.4
         with:
           paths: |
             README.md
@@ -165,7 +167,37 @@ The commit author default user name of `gha-utilities` and email of `actions@git
 ```
 
 
-------
+---
+
+
+If `user.name` and/or `user.email` are assigned prior to running `gha-utilities/workspace-commit`, then it _should_ still be possible to temporarily overwrite either for an individual commit...
+
+
+```YAML
+      - name: Configure Git user.name
+        run: git config user.name Your_GitHub_Name
+
+      - name: Configure Git user.email
+        run: git config user.email Your_GitHub_Email
+
+      # ...
+
+      - name: Commit changes
+        with: gha-utilities/workspace-commit@v0.0.4
+          author: ${{ github.author }}
+          email: name@example.com
+          message: Updates compiled site files
+          all: true
+```
+
+
+... In such cases the `user.name` and/or `user.email` configurations will be reverted values set prior to commit action.
+
+
+**Notice** in cases where the `user.name` and/or `user.email` configurations where **not** set prior to running the `gha-utilities/workspace-commit` action, then configurations will persist!
+
+
+---
 
 
 Multi-line commit messages are possible from Workflow file(s), and _should_ also allow for environment variables...
@@ -173,7 +205,7 @@ Multi-line commit messages are possible from Workflow file(s), and _should_ also
 
 ```YAML
       - name: Workspace Commit
-        uses: gha-utilities/workspace-commit@v0.0.3
+        uses: gha-utilities/workspace-commit@v0.0.4
         env:
           COMMIT_MESSAGE_FOOTER: This commit was applied automatically from an Action
         with:
@@ -182,11 +214,27 @@ Multi-line commit messages are possible from Workflow file(s), and _should_ also
             Updates compiled site files
 
             ${COMMIT_MESSAGE_FOOTER}
-
-
 ```
 
-___
+
+---
+
+
+Local testing of this Action is possible by defining environment variables...
+
+
+```Bash
+GITHUB_ACTOR='User_Name'\
+  GITHUB_REPOSITORY='organization/repository'\
+  INPUT_AUTHOR='Git_Name'\
+  INPUT_EMAIL='Email_Name@example.com'\
+  INPUT_MESSAGE='test workspace-commit index.js'\
+  INPUT_PATHS='file.ext'\
+  node ~/git/hub/gha-utilities/workspace-commit/index.js
+```
+
+
+______
 
 
 ## Attribution
@@ -199,18 +247,22 @@ ___
 
 - [GitHub -- `@actions/core`](https://github.com/actions/toolkit/tree/master/packages/core)
 
+- [GitHub -- `gha-utilities/workspace-commit` -- Issue #1](https://github.com/gha-utilities/workspace-commit/issues/1)
+
 - [GitHub -- `peter-evans/create-pull-request`](https://github.com/peter-evans/create-pull-request)
 
 - [GitHub -- `ad-m/github-push-action`](https://github.com/ad-m/github-push-action)
 
 - [GitHub -- Creating a JavaScript Action](https://help.github.com/en/articles/creating-a-javascript-action#commit-and-push-your-action-to-github), specifically the `commit-and-push-your-action-to-github` section that states dependencies must be checked into Git tracking.
 
+- [GitHub -- Environment Variables](https://docs.github.com/en/actions/reference/environment-variables)
+
 - [GitHub -- Workflow syntax for GitHub actions](https://help.github.com/en/articles/workflow-syntax-for-github-actions)
 
 - [StackOverflow -- GitHub Actions share Workspace Artifacts between jobs](https://stackoverflow.com/questions/57498605)
 
 
-___
+______
 
 
 ## License
@@ -276,3 +328,4 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 [workspace_commit__master__source_code]:
   https://github.com/gha-utilities/workspace-commit
   "&#x2328; Project source code!"
+
